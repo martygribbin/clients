@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\User;
 
 class UserTaskController extends Controller
 {
@@ -14,8 +15,8 @@ class UserTaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all()->sortBy('updated_at')->where('user_id', '1');// need to change this to show loggin in user
-        return view('users.tasks.index')->with('tasks', $tasks);;
+        $tasks = Task::all()->sortBy('updated_at')->where('user_id', \Auth::user()->id);// need to change this to show loggin in user
+        return view('users.tasks.index')->with('tasks', $tasks);
     }
 
     /**
@@ -25,7 +26,8 @@ class UserTaskController extends Controller
      */
     public function create()
     {
-        return view('users.tasks.create');
+        $tasks = Task::all()->sortByDesc('updated_at')->where('user_id', \Auth::user()->id)->take(5);
+        return view('users.tasks.create')->with('tasks', $tasks);
     }
 
     /**
@@ -36,7 +38,21 @@ class UserTaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+    $task = new Task;
+    $task->title = $request->title;
+    $task->description = $request->description;
+    $task->user_id = \Auth::user()->id;
+    $task->save();
+
+    // $input = $request->all();
+
+    // Task::create($input);
+    
+
+    return redirect()->back();
+
+    
     }
 
     /**
@@ -47,7 +63,10 @@ class UserTaskController extends Controller
      */
     public function show($id)
     {
-        //
+          $task = Task::findOrFail($id);
+
+    return view('users.tasks.show')->withTask($task);
+
     }
 
     /**

@@ -12,20 +12,33 @@
 @include('errors')
 
 <div class="container-fluid">
+  @if(Session::has('flash_message'))
+    <div class="alert alert-success">
+        {{ Session::get('flash_message') }}
+    </div>
+@endif
   <h1>New Task</h1>
   <p>Please enter a new task request for changes to your website.  </p>
   <div class="row">
-    <div class="col-sm-8"><form>
-  <div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email">
-  </div>
+    <div class="col-sm-8">
+
+{!! Form::open([
+    'route' => 'tasks.store'
+]) !!}
+
 <div class="form-group">
-  <label for="comment">Comment:</label>
-  <textarea class="form-control" rows="5" id="comment"></textarea>
+    {!! Form::label('title', 'Title:', ['class' => 'control-label']) !!}
+    {!! Form::text('title', null, ['class' => 'form-control']) !!}
 </div>
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
+
+<div class="form-group">
+    {!! Form::label('description', 'Description:', ['class' => 'control-label']) !!}
+    {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+</div>
+
+{!! Form::submit('Create New Task', ['class' => 'btn btn-primary']) !!}
+
+{!! Form::close() !!}
 
 </div>
 
@@ -41,14 +54,17 @@
 </div>
 
 <h3>Previous 5 Tasks</h3>
-<ul class="list-group">
-  <li class="list-group-item list-group-item-success">First item</li>
-  <li class="list-group-item list-group-item-info">Second item</li>
-  <li class="list-group-item list-group-item-warning">Third item</li>
-  <li class="list-group-item list-group-item-danger">Fourth item</li>
-  <li class="list-group-item list-group-item-danger">Fourth item</li>
-</ul>
+ @foreach ($tasks as $task)
+ @if($task->completed == true)
+    <div class="panel panel-success">
+ @else
+    <div class="panel panel-danger">
+@endif
+      <div class="panel-heading">{{$task->title}}</div>
+    </div>
+@endforeach
 </div>
+
 
 
 

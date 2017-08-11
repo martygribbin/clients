@@ -26,7 +26,7 @@
     <tbody>
       @foreach ($users as $user)
       <tr>
-        <td><a href="{{url('admin/user/'.$user->id.'')}}" class="btn btn-success btn-sm">View User Details</a></td>
+        <td><a href="{{url('admin/user/'.$user->id.'')}}" class="btn btn-success btn-sm">View User Details</a></td> //need to change user->id, shouldn't pass it
         <td>{{$user->id}}</td>
         <td>{{$user->name}}</td>
         <td>{{$user->email}}</td>

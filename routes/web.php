@@ -25,7 +25,7 @@ Route::group(['middleware' => 'admin'], function()
 {
 	Route::get('admin/dashboard', 'HomeController@index');
 	Route::get('admin/routes', 'HomeController@admin');
-	Route::resource('admin/task', 'TaskController');
+	Route::resource('admin/task', 'AdminTaskController');
    	Route::resource('admin/user', 'UserController');
    	Route::resource('admin/notification', 'NotificationController');
 });

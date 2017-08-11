@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Task;
+use App\User;
 
-class TaskController extends Controller
+class AdminTaskController extends Controller
 {
-     public function index()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return view('admin.task.index');
+                $tasks = Task::all()->sortBy('updated_at')->where('user_id', \Auth::user()->id);// need to change this to show loggin in user
+        return view('admin.task.index')->with('tasks', $tasks);
     }
 
     /**
@@ -18,7 +26,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('admin.task.create');
+         return view('admin.task.create');
     }
 
     /**
@@ -40,7 +48,9 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+          $task = Task::findOrFail($id);
+
+    return view('admin.task.show')->withTask($task);
     }
 
     /**

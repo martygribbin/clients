@@ -44,7 +44,7 @@
             </li>
 
              <li><a href="#"><span>Projects</span></a></li>
-             <li class="treeview"><a href="{{url('admin/task/task')}}"><span>Tasks</span><i class="fa fa-angle-left pull-right"></i></a>               
+             <li class="treeview"><a href="{{url('admin/task/task')}}"><span>User Tasks</span><i class="fa fa-angle-left pull-right"></i></a>               
                 <ul class="treeview-menu">
                     <li><a href="{{url('admin/task')}}">All Tasks</a></li>
                     <li><a href="{{url('admin/task/create')}}">New Task</a></li>
